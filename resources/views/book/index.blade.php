@@ -43,6 +43,15 @@
         <button type="submit">Enviar</button>
     </form>
     <hr>
+    <h2>Exportar / importar</h2>
+    <a href="{{ route('book.export') }}">Exportar </a>
+    <form action="{{ route('book.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <label>Importar</label>
+        <input type="file" name="file">
+        <button type="submit">Enviar</button>
+    </form>
+    <hr>
     <table border="1">
         <thead>
             <tr>

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BooksExport;
+use App\Imports\BooksImport;
 use App\Models\Books;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BooksController extends Controller
 {
@@ -36,6 +39,18 @@ class BooksController extends Controller
 
     public function delete($id){
         $book = Books::destroy($id);
+        return redirect(route('book.index'));
+    }
+
+    public function exportExcel(){
+
+        return Excel::download(new BooksExport, 'definitivo.xlsx');
+    }
+
+    public function importExcel(Request $request){
+
+        $request -> validate(['file' => 'required|mimes:xlsx,xls']);
+        Excel::import(new BooksImport, $request->file('file'));
         return redirect(route('book.index'));
     }
 }
